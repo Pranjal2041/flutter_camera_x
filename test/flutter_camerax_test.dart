@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_camerax/flutter_camerax.dart';
+import 'package:flutter_camerax/flutter_cameraX.dart';
 
 void main() {
   const MethodChannel channel = MethodChannel('flutter_camerax');
@@ -18,6 +18,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await FlutterCamerax.platformVersion, '42');
+    expect(await FlutterCameraX.platformVersion, '42');
   });
 }
