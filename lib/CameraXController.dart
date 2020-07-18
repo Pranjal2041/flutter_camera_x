@@ -7,12 +7,14 @@ class CameraXController{
 //  CameraXController._(id)
 //      : _channel = new MethodChannel('${CameraXConstants.channel_id}_$id');
 
-  var id;
+  var _cameraXDescriptor;
 
-  CameraXController(id){
-    this.id = id;
-    this._channel = new MethodChannel('${CameraXConstants.channel_id}_$id');
+  CameraXController(cameraXDescriptor){
+    this._cameraXDescriptor = cameraXDescriptor;
+    this._channel = new MethodChannel('${CameraXConstants.channel_id}_0');
   }
+
+
 
 //  CameraXController._(int id)
 //      : _channel = new MethodChannel('flutter_pluginer_$id');
@@ -26,11 +28,20 @@ class CameraXController{
       return _channel.invokeMethod(CameraXConstants.set_flash_method_name,{"data": "Off"});
     if(mode==FlashModeX.Auto)
       return _channel.invokeMethod(CameraXConstants.set_flash_method_name,{"data": "Auto"});
+    }
+
+  Future<void> initialize() async {
+    if(_cameraXDescriptor==null)
+      return;
+    _channel.invokeMethod("initializeCamera",{"lensFacing": getStringFromCameraXFacing(_cameraXDescriptor.lensFacing)});
   }
 
   Future<void> takePicture(String path) async {
       return _channel.invokeMethod(CameraXConstants.capture_image_method_name, {"data": path});
   }
 
-}
+  Future<void> setAspectRatio(int num,int denom){
+    return _channel.invokeMethod(CameraXConstants.set_preview_aspect_ratio_method_name,{"num":num,"denom":denom});
+  }
 
+}

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_camerax/CameraXController.dart';
 import 'package:flutter_camerax/flutter_cameraX.dart';
 import 'package:flutter_camerax/models/enums.dart';
+import 'package:flutter_camerax/CameraXDescriptor.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,11 +16,19 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState() {
-    _cameraXController = new CameraXController(0);
+  void initState()  {
+    initializeCamera();
     super.initState();
   }
 
+  initializeCamera() async {
+    var cameras = await CameraXDescriptor.getAvailableCameras();
+    _cameraXController = CameraXController(cameras[1]);
+//    _cameraXController.initialize();
+    if (mounted) {
+      setState(() {});
+    }
+  }
   CameraXController _cameraXController;
 
   @override
@@ -37,10 +46,11 @@ class _MyAppState extends State<MyApp> {
                 Expanded(
                   flex: 1,
                   child: AspectRatio(
-                    aspectRatio: 1.8,
-                    child: CameraXPreview(
-                      onCameraXCreated: _onCameraXViewCreated,
-                    ),
+                    aspectRatio: 16/9,
+                    child: _cameraXController!=null?CameraXPreview(
+//                      onCameraXCreated: _onCameraXViewCreated,
+                    cameraXController: _cameraXController,
+                    ):Text("Loading"),
                   ),
                 ),
                 Align(

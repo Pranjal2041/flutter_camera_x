@@ -2,8 +2,10 @@ package com.pranjal.flutter_camerax;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.hardware.camera2.CameraManager;
 import android.os.Environment;
 import android.util.Log;
+import android.util.Rational;
 import android.util.Size;
 import android.view.MotionEvent;
 import android.view.Surface;
@@ -11,9 +13,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.camera.camera2.internal.PreviewConfigProvider;
+import androidx.camera.core.AspectRatio;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraControl;
 import androidx.camera.core.CameraSelector;
+import androidx.camera.core.CameraX;
 import androidx.camera.core.DisplayOrientedMeteringPointFactory;
 import androidx.camera.core.FocusMeteringAction;
 import androidx.camera.core.ImageAnalysis;
@@ -21,6 +26,7 @@ import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
 import androidx.camera.core.MeteringPoint;
 import androidx.camera.core.Preview;
+import androidx.camera.core.impl.PreviewConfig;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
@@ -52,12 +58,22 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
     Camera camera;
     int flashMode = ImageCapture.FLASH_MODE_AUTO;
     ImageCapture imageCapture;
+    int cameraId = 0;
+    int lensFacing = CameraSelector.LENS_FACING_BACK;
+    FlutterPlugin.FlutterPluginBinding flutterPluginBinding;
+    FlutterCameraxPlugin plugin;
+    Context context;
+    Rational aspectRatio = new Rational(16,9);
 
 
     FlutterCameraXView(Context context, BinaryMessenger messenger, int id, FlutterPlugin.FlutterPluginBinding flutterPluginBinding,FlutterCameraxPlugin plugin) {
 
 //        textView = new TextView(context);
-        methodChannel = new MethodChannel(messenger, Constants.channel_id +"_"+id);
+        methodChannel = new MethodChannel(messenger, Constants.channel_id +"_"+0);
+        this.cameraId = id;
+        this.context = context;
+        this.plugin = plugin;
+        this.flutterPluginBinding = flutterPluginBinding;
         methodChannel.setMethodCallHandler(this);
         mPreviewView = new PreviewView(context);
         mPreviewView.setImportantForAccessibility(0);
@@ -65,7 +81,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
         mPreviewView.setMinimumWidth(100);
         mPreviewView.setContentDescription("Description Here");
 
-        startCamera(context,flutterPluginBinding,plugin); //start camera if permission has been granted by user
+//        startCamera(context,flutterPluginBinding,plugin); //start camera if permission has been granted by user
     }
 
     private void startCamera(final Context context, final FlutterPlugin.FlutterPluginBinding flutterPluginBinding, final FlutterCameraxPlugin plugin) {
@@ -77,6 +93,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
                 try {
 
                     ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+
                     bindPreview(cameraProvider,context,flutterPluginBinding,plugin);
 
                 } catch (ExecutionException | InterruptedException e) {
@@ -87,14 +104,23 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
         }, ContextCompat.getMainExecutor(context));
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility", "RestrictedApi"})
     void bindPreview(@NonNull ProcessCameraProvider cameraProvider, Context context, FlutterPlugin.FlutterPluginBinding flutterPluginBinding, FlutterCameraxPlugin plugin) {
 
+
+//        PreviewConfig previewConfig = new PreviewConfig.Builder()
+//                .setTargetResolution(new Size(720, 720))
+//                .build();
         Preview.Builder previewBuilder = new Preview.Builder();
-        Preview preview = previewBuilder.build();
+        @SuppressLint("RestrictedApi")
+        Preview preview = previewBuilder.setTargetAspectRatioCustom(aspectRatio).build();
+//        CameraSelector cameraSelector = new CameraSelector().Builder()
+
         final CameraSelector cameraSelector = new CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                .requireLensFacing(cameraId==0?CameraSelector.LENS_FACING_BACK:CameraSelector.LENS_FACING_FRONT)
                 .build();
+        CameraManager cameraManager = (CameraManager) plugin.activityPluginBinding.getActivity().getSystemService(Context.CAMERA_SERVICE);
+
 
         final ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
                 .build();
@@ -105,12 +131,15 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
                 .setTargetRotation(plugin.activityPluginBinding.getActivity().getWindowManager().getDefaultDisplay().getRotation())
                 .build();
 
+
         preview.setSurfaceProvider(mPreviewView.createSurfaceProvider());
-        imageCapture.setFlashMode(ImageCapture.FLASH_MODE_AUTO);
+        imageCapture.setFlashMode(flashMode);
+
         Camera camera = cameraProvider.bindToLifecycle(((LifecycleOwner) plugin.activityPluginBinding.getActivity()), cameraSelector, preview, imageAnalysis, imageCapture);
         final CameraControl cameraControl = camera.getCameraControl();
-
-
+//        val captureSize = imageCaptureUseCase.attachedSurfaceResolution ?: Size(0, 0)
+//        val previewSize = previewUseCase.attachedSurfaceResolution ?: Size(0, 0)
+          Size prevSize = preview.getAttachedSurfaceResolution();
         mPreviewView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -163,6 +192,9 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
             imageCapture.setFlashMode(flashMode);
     }
 
+    private void setLensFacing(String lensFacing){
+        this.lensFacing = Utils.getLensFacingFromString(lensFacing);
+    }
 
     @Override
     public void onMethodCall(MethodCall call, @NonNull MethodChannel.Result result) {
@@ -174,6 +206,23 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
             case Constants.set_flash_method_name:
                 setFlashMode((String) call.argument("data"));
                 result.success(true);
+                break;
+            case Constants.set_lens_facing_method_name:
+                setLensFacing((String) call.argument("data"));
+                result.success(true);
+                break;
+            case Constants.initializeCamera:
+                setLensFacing((String)call.argument("lensFacing"));
+                startCamera(context,flutterPluginBinding,plugin);
+                result.success(true);
+                break;
+            case Constants.set_preview_aspect_ratio_method_name:
+                try {
+                    aspectRatio = new Rational((int)(call.argument("num")), (int)(call.argument("denom")));
+                    result.success(true);
+                }catch (Exception e){
+                    result.error("-2","Invalid Aspect Ratio","Invalid Aspect Ratio");
+                }
                 break;
             default:
                 result.notImplemented();

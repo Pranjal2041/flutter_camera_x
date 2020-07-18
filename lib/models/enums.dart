@@ -30,3 +30,25 @@ enum ResolutionPresetX {
   max,
 }
 
+getCameraXFacingFromString(String facing){
+  switch(facing){
+    case 'Front':
+      return CameraXFacing.Front;
+    case 'Back':
+      return CameraXFacing.Back;
+    case 'External':
+      return CameraXFacing.External;
+  }
+}
+
+getStringFromCameraXFacing(CameraXFacing facing){
+  switch(facing){
+    case CameraXFacing.Back:
+      return "Back";
+    case CameraXFacing.Front:
+      return "Front";
+    case CameraXFacing.External:
+      return "External";
+  }
+}
+
