@@ -108,7 +108,6 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
         preview.setSurfaceProvider(mPreviewView.createSurfaceProvider());
         imageCapture.setFlashMode(ImageCapture.FLASH_MODE_AUTO);
         Camera camera = cameraProvider.bindToLifecycle(((LifecycleOwner) plugin.activityPluginBinding.getActivity()), cameraSelector, preview, imageAnalysis, imageCapture);
-
         final CameraControl cameraControl = camera.getCameraControl();
 
 
@@ -139,12 +138,12 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
         imageCapture.takePicture(outputFileOptions, executor, new ImageCapture.OnImageSavedCallback () {
             @Override
             public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-                result.success(true);
+//                result.success(true);
             }
             @Override
             public void onError(@NonNull ImageCaptureException error) {
                 error.printStackTrace();
-                result.error("-1","error while capturing image",error.getMessage());
+//                result.error("-1","error while capturing image",error.getMessage());
             }
         });
     }

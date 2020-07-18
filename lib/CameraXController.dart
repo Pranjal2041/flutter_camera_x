@@ -4,13 +4,20 @@ import 'package:flutter_camerax/models/CameraXConstants.dart';
 import 'package:flutter_camerax/models/enums.dart';
 
 class CameraXController{
-  CameraXController._(id)
-      : _channel = new MethodChannel('${CameraXConstants.channel_id}_$id');
+//  CameraXController._(id)
+//      : _channel = new MethodChannel('${CameraXConstants.channel_id}_$id');
+
+  var id;
+
+  CameraXController(id){
+    this.id = id;
+    this._channel = new MethodChannel('${CameraXConstants.channel_id}_$id');
+  }
 
 //  CameraXController._(int id)
 //      : _channel = new MethodChannel('flutter_pluginer_$id');
 
-  final MethodChannel _channel;
+  MethodChannel _channel;
 
   Future<void> setFlashMode(FlashModeX mode) async {
     if(mode==FlashModeX.On)
@@ -27,34 +34,3 @@ class CameraXController{
 
 }
 
-typedef void CameraXCreatedCallback(CameraXController controller);
-
-class CameraXPreview extends StatefulWidget {
-
-  const CameraXPreview({
-    Key key,
-    this.onCameraXCreated,
-  }) : super(key: key);
-
-  final CameraXCreatedCallback onCameraXCreated;
-
-  @override
-  _CameraXPreviewState createState() => _CameraXPreviewState();
-}
-
-class _CameraXPreviewState extends State<CameraXPreview> {
-  @override
-  Widget build(BuildContext context) {
-    return AndroidView(
-      viewType: CameraXConstants.previewViewType,
-      onPlatformViewCreated: _onPlatformViewCreated,
-    );
-  }
-
-  void _onPlatformViewCreated(int id) {
-    if (widget.onCameraXCreated == null) {
-      return;
-    }
-    widget.onCameraXCreated(new CameraXController._(id));
-  }
-}

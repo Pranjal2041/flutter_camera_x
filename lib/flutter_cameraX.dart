@@ -17,3 +17,35 @@ class FlutterCameraX {
 }
 
 
+typedef void CameraXCreatedCallback(CameraXController controller);
+
+class CameraXPreview extends StatefulWidget {
+
+  const CameraXPreview({
+    Key key,
+    this.onCameraXCreated,
+  }) : super(key: key);
+
+  final CameraXCreatedCallback onCameraXCreated;
+
+  @override
+  _CameraXPreviewState createState() => _CameraXPreviewState();
+}
+
+class _CameraXPreviewState extends State<CameraXPreview> {
+  @override
+  Widget build(BuildContext context) {
+    return AndroidView(
+      viewType: CameraXConstants.previewViewType,
+      onPlatformViewCreated: _onPlatformViewCreated,
+    );
+  }
+
+  void _onPlatformViewCreated(int id) {
+    if (widget.onCameraXCreated == null) {
+      return;
+    }
+    widget.onCameraXCreated(CameraXController(id));
+  }
+}
+

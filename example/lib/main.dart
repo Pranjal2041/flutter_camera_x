@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_camerax/CameraXController.dart';
+import 'package:flutter_camerax/flutter_cameraX.dart';
 import 'package:flutter_camerax/models/enums.dart';
 
 void main() => runApp(MyApp());
@@ -15,10 +16,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
+    _cameraXController = new CameraXController(0);
     super.initState();
   }
 
   CameraXController _cameraXController;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
