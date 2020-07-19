@@ -1,4 +1,4 @@
-package com.pranjal.flutter_camerax_example;
+package com.pranjal.flutter_camera_x_example;
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity;

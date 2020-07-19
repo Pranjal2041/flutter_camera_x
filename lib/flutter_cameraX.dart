@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_camerax/CameraXController.dart';
-import 'package:flutter_camerax/CameraXMethodChannel.dart';
-import 'package:flutter_camerax/models/CameraXConstants.dart';
+import 'package:flutter_camera_x/CameraXController.dart';
+import 'package:flutter_camera_x/CameraXMethodChannel.dart';
+import 'package:flutter_camera_x/models/CameraXConstants.dart';
 
 class FlutterCameraX {
   static final MethodChannel _channel =

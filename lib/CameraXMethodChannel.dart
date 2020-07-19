@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_camerax/models/CameraXConstants.dart';
+import 'package:flutter_camera_x/models/CameraXConstants.dart';
 
 @protected
 class CameraXMethodChannel {

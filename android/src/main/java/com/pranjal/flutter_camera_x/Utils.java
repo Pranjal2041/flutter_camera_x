@@ -1,4 +1,4 @@
-package com.pranjal.flutter_camerax;
+package com.pranjal.flutter_camera_x;
 
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;

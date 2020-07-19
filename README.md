@@ -1,4 +1,4 @@
-# flutter_camerax
+# flutter_camera_x
 
 A new flutter plugin project.
 

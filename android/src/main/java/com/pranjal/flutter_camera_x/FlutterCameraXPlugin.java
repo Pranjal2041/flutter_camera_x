@@ -1,4 +1,4 @@
-package com.pranjal.flutter_camerax;
+package com.pranjal.flutter_camera_x;
 
 import android.content.Context;
 import android.hardware.camera2.CameraAccessException;
@@ -22,8 +22,8 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
-/** FlutterCameraxPlugin */
-public class FlutterCameraxPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
+/** FlutterCameraXPlugin */
+public class FlutterCameraXPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -51,7 +51,7 @@ public class FlutterCameraxPlugin implements FlutterPlugin, MethodCallHandler, A
   // in the same class.
   public static void registerWith(Registrar registrar) {
     final MethodChannel channel = new MethodChannel(registrar.messenger(), "flutter_camerax");
-    channel.setMethodCallHandler(new FlutterCameraxPlugin());
+    channel.setMethodCallHandler(new FlutterCameraXPlugin());
   }
 
   @Override

@@ -1,4 +1,4 @@
-package com.pranjal.flutter_camerax;
+package com.pranjal.flutter_camera_x;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -61,12 +61,12 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
     int cameraId = 0;
     int lensFacing = CameraSelector.LENS_FACING_BACK;
     FlutterPlugin.FlutterPluginBinding flutterPluginBinding;
-    FlutterCameraxPlugin plugin;
+    FlutterCameraXPlugin plugin;
     Context context;
     Rational aspectRatio = new Rational(16,9);
 
 
-    FlutterCameraXView(Context context, BinaryMessenger messenger, int id, FlutterPlugin.FlutterPluginBinding flutterPluginBinding,FlutterCameraxPlugin plugin) {
+    FlutterCameraXView(Context context, BinaryMessenger messenger, int id, FlutterPlugin.FlutterPluginBinding flutterPluginBinding,FlutterCameraXPlugin plugin) {
 
 //        textView = new TextView(context);
         methodChannel = new MethodChannel(messenger, Constants.channel_id +"_"+0);
@@ -84,7 +84,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
 //        startCamera(context,flutterPluginBinding,plugin); //start camera if permission has been granted by user
     }
 
-    private void startCamera(final Context context, final FlutterPlugin.FlutterPluginBinding flutterPluginBinding, final FlutterCameraxPlugin plugin) {
+    private void startCamera(final Context context, final FlutterPlugin.FlutterPluginBinding flutterPluginBinding, final FlutterCameraXPlugin plugin) {
         final ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(context);
 
         cameraProviderFuture.addListener(new Runnable() {
@@ -105,7 +105,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
     }
 
     @SuppressLint({"ClickableViewAccessibility", "RestrictedApi"})
-    void bindPreview(@NonNull ProcessCameraProvider cameraProvider, Context context, FlutterPlugin.FlutterPluginBinding flutterPluginBinding, FlutterCameraxPlugin plugin) {
+    void bindPreview(@NonNull ProcessCameraProvider cameraProvider, Context context, FlutterPlugin.FlutterPluginBinding flutterPluginBinding, FlutterCameraXPlugin plugin) {
 
 
 //        PreviewConfig previewConfig = new PreviewConfig.Builder()

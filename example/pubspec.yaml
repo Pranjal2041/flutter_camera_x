@@ -1,5 +1,5 @@
-name: flutter_camerax_example
-description: Demonstrates how to use the flutter_camerax plugin.
+name: flutter_camera_x_example
+description: Demonstrates how to use the flutter_camera_x plugin.
 publish_to: 'none'
 
 environment:
@@ -17,7 +17,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_camerax:
+  flutter_camera_x:
     path: ../
 
 # For information on the generic Dart part of this file, see the

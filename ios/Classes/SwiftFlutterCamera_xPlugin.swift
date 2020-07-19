@@ -1,10 +1,10 @@
 import Flutter
 import UIKit
 
-public class SwiftFlutterCameraxPlugin: NSObject, FlutterPlugin {
+public class SwiftFlutterCamera_xPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "flutter_camerax", binaryMessenger: registrar.messenger())
-    let instance = SwiftFlutterCameraxPlugin()
+    let channel = FlutterMethodChannel(name: "flutter_camera_x", binaryMessenger: registrar.messenger())
+    let instance = SwiftFlutterCamera_xPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 

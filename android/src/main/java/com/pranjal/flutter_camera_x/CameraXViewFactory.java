@@ -1,4 +1,4 @@
-package com.pranjal.flutter_camerax;
+package com.pranjal.flutter_camera_x;
 
 import android.content.Context;
 
@@ -12,9 +12,9 @@ public class CameraXViewFactory extends PlatformViewFactory {
 
     private final BinaryMessenger messenger;
     FlutterPlugin.FlutterPluginBinding flutterPluginBinding;
-    FlutterCameraxPlugin plugin;
+    FlutterCameraXPlugin plugin;
 
-    public CameraXViewFactory(BinaryMessenger messenger, FlutterPlugin.FlutterPluginBinding flutterPluginBinding,FlutterCameraxPlugin plugin) {
+    public CameraXViewFactory(BinaryMessenger messenger, FlutterPlugin.FlutterPluginBinding flutterPluginBinding,FlutterCameraXPlugin plugin) {
         super(StandardMessageCodec.INSTANCE);
         this.plugin = plugin;
         this.flutterPluginBinding = flutterPluginBinding;

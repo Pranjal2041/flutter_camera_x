@@ -1,4 +1,4 @@
-group 'com.pranjal.flutter_camerax'
+group 'com.pranjal.flutter_camera_x'
 version '1.0'
 
 buildscript {

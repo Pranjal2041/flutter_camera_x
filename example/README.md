@@ -1,6 +1,6 @@
-# flutter_camerax_example
+# flutter_camera_x_example
 
-Demonstrates how to use the flutter_camerax plugin.
+Demonstrates how to use the flutter_camera_x plugin.
 
 ## Getting Started
 

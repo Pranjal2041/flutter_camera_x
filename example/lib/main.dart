@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:flutter_camerax/CameraXController.dart';
-import 'package:flutter_camerax/flutter_cameraX.dart';
-import 'package:flutter_camerax/models/enums.dart';
-import 'package:flutter_camerax/CameraXDescriptor.dart';
+import 'package:flutter_camera_x/CameraXController.dart';
+import 'package:flutter_camera_x/flutter_cameraX.dart';
+import 'package:flutter_camera_x/models/enums.dart';
+import 'package:flutter_camera_x/CameraXDescriptor.dart';
 
 void main() => runApp(MyApp());
 
@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
                     aspectRatio: 16/9,
                     child: _cameraXController!=null?CameraXPreview(
 //                      onCameraXCreated: _onCameraXViewCreated,
-                    cameraXController: _cameraXController,
+                      cameraXController: _cameraXController,
                     ):Text("Loading"),
                   ),
                 ),

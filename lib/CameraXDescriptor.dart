@@ -1,6 +1,6 @@
-import 'package:flutter_camerax/CameraXMethodChannel.dart';
-import 'package:flutter_camerax/models/CameraXConstants.dart';
-import 'package:flutter_camerax/models/enums.dart';
+import 'package:flutter_camera_x/CameraXMethodChannel.dart';
+import 'package:flutter_camera_x/models/CameraXConstants.dart';
+import 'package:flutter_camera_x/models/enums.dart';
 
 class CameraXDescriptor{
   CameraXDescriptor({this.name, this.lensFacing, this.sensorOrientation});

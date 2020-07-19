@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_camerax/flutter_cameraX.dart';
+import 'package:flutter_camera_x/flutter_cameraX.dart';
 
 void main() {
-  const MethodChannel channel = MethodChannel('flutter_camerax');
+  const MethodChannel channel = MethodChannel('flutter_camera_x');
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
