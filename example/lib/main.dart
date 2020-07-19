@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:flutter_camera_x/CameraXController.dart';
 import 'package:flutter_camera_x/flutter_cameraX.dart';
-import 'package:flutter_camera_x/models/enums.dart';
 import 'package:flutter_camera_x/CameraXDescriptor.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -26,7 +22,6 @@ class _MyAppState extends State<MyApp> {
   initializeCamera() async {
     var cameras = await CameraXDescriptor.getAvailableCameras();
     _cameraXController = CameraXController(cameras[1]);
-//    _cameraXController.initialize();
     if (mounted) {
       setState(() {});
     }
@@ -50,7 +45,6 @@ class _MyAppState extends State<MyApp> {
                   child: AspectRatio(
                     aspectRatio: 16/9,
                     child: _cameraXController!=null?CameraXPreview(
-//                      onCameraXCreated: _onCameraXViewCreated,
                       cameraXController: _cameraXController,
                     ):Text("Loading"),
                   ),
@@ -74,9 +68,5 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
-  }
-
-  void _onCameraXViewCreated(CameraXController controller) {
-    controller.setFlashMode(FlashModeX.Auto);
   }
 }
