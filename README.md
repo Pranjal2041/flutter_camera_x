@@ -1,6 +1,6 @@
 # flutter_camera_x
 
-A new flutter plugin project.
+A flutter plugin for using androidX's new cameraX API.
 
 ## Getting Started
 
