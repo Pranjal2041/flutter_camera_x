@@ -1,8 +1,8 @@
 name: flutter_camera_x
-description: A new flutter plugin project.
+description: A flutter plugin for androidX CameraX API.
 version: 0.0.1
-author:
-homepage:
+author: Pranjal Aggarwal
+homepage: https://github.com/Pranjal2041
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

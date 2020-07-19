@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="04b6bb13-e134-419e-aecd-1fc95f868fc7" name="Default Changelist" comment="" />
+    <list default="true" id="04b6bb13-e134-419e-aecd-1fc95f868fc7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/pranjal/flutter_camera_x/FlutterCameraXView.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/pranjal/flutter_camera_x/FlutterCameraXView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1ethCtN9HoYN6R6IU9fLaR5cw7r" />
   <component name="ProjectViewState">
@@ -33,21 +43,21 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1491" height="206" key="GridCell.Tab.0.bottom" timestamp="1595150884405">
+    <state width="1491" height="206" key="GridCell.Tab.0.bottom" timestamp="1595154647257">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="206" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595150884405" />
-    <state width="1491" height="206" key="GridCell.Tab.0.center" timestamp="1595150884405">
+    <state width="1491" height="206" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595154647257" />
+    <state width="1491" height="206" key="GridCell.Tab.0.center" timestamp="1595154647257">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="206" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595150884405" />
-    <state width="1491" height="206" key="GridCell.Tab.0.left" timestamp="1595150884405">
+    <state width="1491" height="206" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595154647257" />
+    <state width="1491" height="206" key="GridCell.Tab.0.left" timestamp="1595154647257">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="206" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595150884405" />
-    <state width="1491" height="206" key="GridCell.Tab.0.right" timestamp="1595150884405">
+    <state width="1491" height="206" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595154647257" />
+    <state width="1491" height="206" key="GridCell.Tab.0.right" timestamp="1595154647257">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="206" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595150884405" />
+    <state width="1491" height="206" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595154647257" />
   </component>
 </project>

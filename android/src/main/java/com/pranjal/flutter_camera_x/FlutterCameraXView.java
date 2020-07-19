@@ -160,7 +160,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
 
     void captureImage(String path, final MethodChannel.Result result){
         SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
-        File file = new File(getDirectoryName(), mDateFormat.format(new Date())+ ".jpg");
+        File file = new File(path);//getDirectoryName(), mDateFormat.format(new Date())+ ".jpg");
         ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(file).build();
         imageCapture.setFlashMode(flashMode);
 
