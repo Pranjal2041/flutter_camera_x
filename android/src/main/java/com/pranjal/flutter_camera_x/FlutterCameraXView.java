@@ -2,8 +2,10 @@ package com.pranjal.flutter_camera_x;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraManager;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.util.Rational;
 import android.util.Size;
@@ -11,8 +13,10 @@ import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.camera2.internal.PreviewConfigProvider;
 import androidx.camera.core.AspectRatio;
 import androidx.camera.core.Camera;
@@ -29,6 +33,7 @@ import androidx.camera.core.Preview;
 import androidx.camera.core.impl.PreviewConfig;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
@@ -56,7 +61,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
     private int REQUEST_CODE_PERMISSIONS = 1001;
     private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
     Camera camera;
-    int flashMode = ImageCapture.FLASH_MODE_AUTO;
+    int flashMode = ImageCapture.FLASH_MODE_ON;
     ImageCapture imageCapture;
     int cameraId = 0;
     int lensFacing = CameraSelector.LENS_FACING_BACK;
@@ -64,6 +69,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
     FlutterCameraXPlugin plugin;
     Context context;
     Rational aspectRatio = new Rational(16,9);
+    ProcessCameraProvider cameraProvider;
 
 
     FlutterCameraXView(Context context, BinaryMessenger messenger, int id, FlutterPlugin.FlutterPluginBinding flutterPluginBinding,FlutterCameraXPlugin plugin) {
@@ -92,7 +98,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
             public void run() {
                 try {
 
-                    ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                    cameraProvider = cameraProviderFuture.get();
 
                     bindPreview(cameraProvider,context,flutterPluginBinding,plugin);
 
@@ -117,9 +123,8 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
 //        CameraSelector cameraSelector = new CameraSelector().Builder()
 
         final CameraSelector cameraSelector = new CameraSelector.Builder()
-                .requireLensFacing(cameraId==0?CameraSelector.LENS_FACING_BACK:CameraSelector.LENS_FACING_FRONT)
+                .requireLensFacing(lensFacing==CameraSelector.LENS_FACING_BACK?CameraSelector.LENS_FACING_BACK:CameraSelector.LENS_FACING_FRONT)
                 .build();
-        CameraManager cameraManager = (CameraManager) plugin.activityPluginBinding.getActivity().getSystemService(Context.CAMERA_SERVICE);
 
 
         final ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
@@ -135,7 +140,8 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
         preview.setSurfaceProvider(mPreviewView.createSurfaceProvider());
         imageCapture.setFlashMode(flashMode);
 
-        Camera camera = cameraProvider.bindToLifecycle(((LifecycleOwner) plugin.activityPluginBinding.getActivity()), cameraSelector, preview, imageAnalysis, imageCapture);
+        camera = cameraProvider.bindToLifecycle(((LifecycleOwner) plugin.activityPluginBinding.getActivity()), cameraSelector, preview, imageAnalysis, imageCapture);
+
         final CameraControl cameraControl = camera.getCameraControl();
 //        val captureSize = imageCaptureUseCase.attachedSurfaceResolution ?: Size(0, 0)
 //        val previewSize = previewUseCase.attachedSurfaceResolution ?: Size(0, 0)
@@ -164,27 +170,46 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
         ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(file).build();
         imageCapture.setFlashMode(flashMode);
 
+
         imageCapture.takePicture(outputFileOptions, executor, new ImageCapture.OnImageSavedCallback () {
             @Override
             public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-//                result.success(true);
+                plugin.activityPluginBinding.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        result.success(true);
+                    }
+                });
+//                new Handler().post(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                              result.success(true);
+//                            }
+//                        });
             }
             @Override
             public void onError(@NonNull ImageCaptureException error) {
-                error.printStackTrace();
-//                result.error("-1","error while capturing image",error.getMessage());
+                final ImageCaptureException err = error;
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        err.printStackTrace();
+                        result.error("-1","error while capturing image",err.getMessage());
+                }
+                });
+
             }
         });
     }
 
-    public String getDirectoryName() {
-        String app_folder_path = Environment.getExternalStorageDirectory().toString() + "/DCIM";
-        File dir = new File(app_folder_path);
-        if (!dir.exists()) {
-            boolean res =  dir.mkdirs();
-        }
-        return app_folder_path;
-    }
+//    public String getDirectoryName() {
+//        String app_folder_path = Environment.getExternalStorageDirectory().toString() + "/DCIM";
+//        File dir = new File(app_folder_path);
+//        if (!dir.exists()) {
+//            boolean res =  dir.mkdirs();
+//        }
+//        return app_folder_path;
+//    }
 
     private void setFlashMode(String mode){
         flashMode = Utils.getFlashModeFromString(mode);
@@ -201,7 +226,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
         switch (call.method) {
             case Constants.capture_image_method_name:
                 captureImage((String) call.argument("data"), result);
-                result.success(true);
+//                result.success(true);
                 break;
             case Constants.set_flash_method_name:
                 setFlashMode((String) call.argument("data"));
@@ -213,7 +238,11 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
                 break;
             case Constants.initializeCamera:
                 setLensFacing((String)call.argument("lensFacing"));
-                startCamera(context,flutterPluginBinding,plugin);
+//                if(allPermissionsGranted()){
+                    startCamera(context,flutterPluginBinding,plugin);  //start camera if permission has been granted by user
+//                } else{
+//                    ActivityCompat.requestPermissions(plugin.activityPluginBinding.getActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
+//                }
                 result.success(true);
                 break;
             case Constants.set_preview_aspect_ratio_method_name:
@@ -229,6 +258,28 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
         }
     }
 
+//    private boolean allPermissionsGranted(){
+//
+//        for(String permission : REQUIRED_PERMISSIONS){
+//            if(ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED){
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//
+//        if(requestCode == REQUEST_CODE_PERMISSIONS){
+//            if(allPermissionsGranted()){
+//                startCamera(context,flutterPluginBinding,plugin);  //start camera if permission has been granted by user
+//            } else{
+////                Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show();
+//                this.finish();
+//            }
+//        }
+//    }
+
 
 
     @Override
@@ -236,8 +287,12 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
         return mPreviewView;
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void dispose() {
-
+        cameraProvider.shutdown();
+        camera = null;
+        mPreviewView = null;
+        imageCapture = null;
     }
 }

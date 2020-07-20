@@ -7,8 +7,7 @@ import 'package:flutter_camera_x/CameraXMethodChannel.dart';
 import 'package:flutter_camera_x/models/CameraXConstants.dart';
 
 class FlutterCameraX {
-  static final MethodChannel _channel =
-      CameraXMethodChannel.channel;
+  static final MethodChannel _channel = CameraXMethodChannel.channel;
 
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
@@ -16,11 +15,9 @@ class FlutterCameraX {
   }
 }
 
-
 //typedef void CameraXCreatedCallback(CameraXController controller);
 
 class CameraXPreview extends StatefulWidget {
-
   const CameraXPreview({
     Key key,
     this.cameraXController,
@@ -48,4 +45,3 @@ class _CameraXPreviewState extends State<CameraXPreview> {
     widget.cameraXController.initialize();
   }
 }
-

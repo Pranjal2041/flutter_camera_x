@@ -35,8 +35,9 @@ class CameraXController{
     _channel.invokeMethod("initializeCamera",{"lensFacing": getStringFromCameraXFacing(_cameraXDescriptor.lensFacing)});
   }
 
-  Future<void> takePicture(String path) async {
-      return _channel.invokeMethod(CameraXConstants.capture_image_method_name, {"data": path});
+  Future takePicture(String path) async {
+      var image =  await _channel.invokeMethod(CameraXConstants.capture_image_method_name, {"data": path});
+      return image;
   }
 
   Future<void> setAspectRatio(int num,int denom){

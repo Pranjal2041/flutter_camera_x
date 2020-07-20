@@ -19,9 +19,9 @@ public class Utils {
     static int getLensFacingFromString(String mode){
         switch (mode){
             case "Front":
-                return CameraSelector.LENS_FACING_BACK;
-            case "Back":
                 return CameraSelector.LENS_FACING_FRONT;
+            case "Back":
+                return CameraSelector.LENS_FACING_BACK;
         }
         return 0;
     }

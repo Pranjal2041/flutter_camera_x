@@ -1,14 +1,6 @@
-enum FlashModeX {
-  On,
-  Off,
-  Auto
-}
+enum FlashModeX { On, Off, Auto }
 
-enum CameraXFacing {
-  Front,
-  Back,
-  External
-}
+enum CameraXFacing { Front, Back, External }
 
 enum ResolutionPresetX {
   /// 240p (320x240) on Android
@@ -30,8 +22,8 @@ enum ResolutionPresetX {
   max,
 }
 
-getCameraXFacingFromString(String facing){
-  switch(facing){
+getCameraXFacingFromString(String facing) {
+  switch (facing) {
     case 'Front':
       return CameraXFacing.Front;
     case 'Back':
@@ -41,8 +33,8 @@ getCameraXFacingFromString(String facing){
   }
 }
 
-getStringFromCameraXFacing(CameraXFacing facing){
-  switch(facing){
+getStringFromCameraXFacing(CameraXFacing facing) {
+  switch (facing) {
     case CameraXFacing.Back:
       return "Back";
     case CameraXFacing.Front:
@@ -51,4 +43,3 @@ getStringFromCameraXFacing(CameraXFacing facing){
       return "External";
   }
 }
-

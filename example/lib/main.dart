@@ -14,18 +14,20 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState()  {
+  void initState() {
     initializeCamera();
     super.initState();
   }
 
   initializeCamera() async {
     var cameras = await CameraXDescriptor.getAvailableCameras();
-    _cameraXController = CameraXController(cameras[1]);
+    print(cameras);
+    _cameraXController = CameraXController(cameras[0]);
     if (mounted) {
       setState(() {});
     }
   }
+
   CameraXController _cameraXController;
 
   @override
@@ -43,18 +45,21 @@ class _MyAppState extends State<MyApp> {
                 Expanded(
                   flex: 1,
                   child: AspectRatio(
-                    aspectRatio: 16/9,
-                    child: _cameraXController!=null?CameraXPreview(
-                      cameraXController: _cameraXController,
-                    ):Text("Loading"),
+                    aspectRatio: 16 / 9,
+                    child: _cameraXController != null
+                        ? CameraXPreview(
+                            cameraXController: _cameraXController,
+                          )
+                        : Text("Loading"),
                   ),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: InkWell(
                     onTap: () async {
-                      final path = join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
-                      _cameraXController.takePicture(path);
+                      final path = join((await getTemporaryDirectory()).path,
+                          '${DateTime.now()}.png');
+                      await _cameraXController.takePicture(path);
                     },
                     child: Container(
                       height: 50,
