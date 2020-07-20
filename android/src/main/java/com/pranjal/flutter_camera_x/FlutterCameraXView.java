@@ -1,9 +1,11 @@
 package com.pranjal.flutter_camera_x;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraManager;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
@@ -51,6 +53,7 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.platform.PlatformView;
 
 public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCallHandler {
@@ -70,6 +73,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
     Context context;
     Rational aspectRatio = new Rational(16,9);
     ProcessCameraProvider cameraProvider;
+    int CAMERA_REQUEST_ID = 513469796;
 
 
     FlutterCameraXView(Context context, BinaryMessenger messenger, int id, FlutterPlugin.FlutterPluginBinding flutterPluginBinding,FlutterCameraXPlugin plugin) {
@@ -237,13 +241,21 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
                 result.success(true);
                 break;
             case Constants.initializeCamera:
-                setLensFacing((String)call.argument("lensFacing"));
-//                if(allPermissionsGranted()){
-                    startCamera(context,flutterPluginBinding,plugin);  //start camera if permission has been granted by user
-//                } else{
-//                    ActivityCompat.requestPermissions(plugin.activityPluginBinding.getActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
-//                }
-                result.success(true);
+                    setLensFacing((String)call.argument("lensFacing"));
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    // only for gingerbread and newer versions
+                        plugin.activityPluginBinding.getActivity().requestPermissions(
+                            new String[]{Manifest.permission.CAMERA},
+                            513469796);
+                        plugin.activityPluginBinding.addRequestPermissionsResultListener(new PluginRegistry.RequestPermissionsResultListener() {
+                            @Override
+                            public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+                                if(requestCode==CAMERA_REQUEST_ID && grantResults[0]==PackageManager.PERMISSION_GRANTED)
+                                    startCamera(context, flutterPluginBinding, plugin);  //start camera if permission has been granted by user
+                                return false;
+                            }
+                        });
+                    }
                 break;
             case Constants.set_preview_aspect_ratio_method_name:
                 try {

@@ -16,3 +16,8 @@
 
 * Fix issues while disposing camera
 * Fix lens facing issue
+
+
+## 0.0.5
+
+* Add Camera Permission Check
