@@ -9,4 +9,5 @@ public class Constants {
     static final String get_available_cameras_method_name = "getAvailableCameras";
     static final String set_lens_facing_method_name = "setLensFacing";
     static final String set_preview_aspect_ratio_method_name = "setPreviewAspectRatio";
+    static final String play_sound_on_click_method_name = "playSoundOnClick";
 }

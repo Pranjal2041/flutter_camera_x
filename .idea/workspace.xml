@@ -7,8 +7,10 @@
     <list default="true" id="04b6bb13-e134-419e-aecd-1fc95f868fc7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/pranjal/flutter_camera_x/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/pranjal/flutter_camera_x/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/java/com/pranjal/flutter_camera_x/FlutterCameraXView.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/pranjal/flutter_camera_x/FlutterCameraXView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/CameraXController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/CameraXController.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,22 +59,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1595237802041" />
-    <state width="1491" height="258" key="GridCell.Tab.0.bottom" timestamp="1595242573181">
+    <state width="1491" height="204" key="GridCell.Tab.0.bottom" timestamp="1595343746811">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="258" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595242573181" />
-    <state width="1491" height="258" key="GridCell.Tab.0.center" timestamp="1595242573181">
+    <state width="1491" height="204" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595343746811" />
+    <state width="1491" height="204" key="GridCell.Tab.0.center" timestamp="1595343746811">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="258" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595242573181" />
-    <state width="1491" height="258" key="GridCell.Tab.0.left" timestamp="1595242573181">
+    <state width="1491" height="204" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595343746811" />
+    <state width="1491" height="204" key="GridCell.Tab.0.left" timestamp="1595343746811">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="258" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595242573181" />
-    <state width="1491" height="258" key="GridCell.Tab.0.right" timestamp="1595242573181">
+    <state width="1491" height="204" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595343746811" />
+    <state width="1491" height="204" key="GridCell.Tab.0.right" timestamp="1595343746811">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="258" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595242573181" />
+    <state width="1491" height="204" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595343746811" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

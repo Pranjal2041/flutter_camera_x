@@ -8,4 +8,5 @@ class CameraXConstants {
   static const set_lens_facing_method_name = "setLensFacing";
   static const get_available_cameras_method_name = "getAvailableCameras";
   static const set_preview_aspect_ratio_method_name = "setPreviewAspectRatio";
+  static const play_sound_on_click_method_name = "playSoundOnClick";
 }

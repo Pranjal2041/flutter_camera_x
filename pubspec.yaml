@@ -1,11 +1,12 @@
 name: flutter_camera_x
 description: A flutter plugin for androidX CameraX API.
-version: 0.0.5
+version: 0.0.9
 author: Pranjal Aggarwal
 homepage: https://github.com/Pranjal2041
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
+  flutter: ">=1.12.0 <2.0.0"
 
 dependencies:
   flutter:
@@ -25,8 +26,10 @@ flutter:
   # be modified. They are used by the tooling to maintain consistency when
   # adding or updating assets for this project.
   plugin:
-    androidPackage: com.pranjal.flutter_camera_x
-    pluginClass: FlutterCameraXPlugin
+    platforms:
+      android:
+        package: com.pranjal.flutter_camera_x
+        pluginClass: FlutterCameraXPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

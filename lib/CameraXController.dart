@@ -48,4 +48,10 @@ class CameraXController {
         CameraXConstants.set_preview_aspect_ratio_method_name,
         {"num": num, "denom": denom});
   }
+
+  Future enableClickSound(bool val){
+    return _channel.invokeMethod(
+        CameraXConstants.play_sound_on_click_method_name,
+        {"data": val});
+  }
 }

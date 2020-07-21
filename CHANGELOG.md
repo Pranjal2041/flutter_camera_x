@@ -21,3 +21,13 @@
 ## 0.0.5
 
 * Add Camera Permission Check
+
+
+## 0.0.7
+
+* Remove support for ios
+
+
+## 0.0.9
+
+* Play sound on click
