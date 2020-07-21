@@ -63,7 +63,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
     private final MethodChannel methodChannel;
     PreviewView mPreviewView;
     private Executor executor = Executors.newSingleThreadExecutor();
-//    private int REQUEST_CODE_PERMISSIONS = 1001;
+    //    private int REQUEST_CODE_PERMISSIONS = 1001;
 //    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
     Camera camera;
     int flashMode = ImageCapture.FLASH_MODE_AUTO;
@@ -105,6 +105,8 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
             public void run() {
                 try {
 
+                    if(cameraProvider!=null)
+                        return;
                     cameraProvider = cameraProviderFuture.get();
 
                     bindPreview(cameraProvider,context,flutterPluginBinding,plugin);
@@ -153,7 +155,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
         final CameraControl cameraControl = camera.getCameraControl();
 //        val captureSize = imageCaptureUseCase.attachedSurfaceResolution ?: Size(0, 0)
 //        val previewSize = previewUseCase.attachedSurfaceResolution ?: Size(0, 0)
-          Size prevSize = preview.getAttachedSurfaceResolution();
+        Size prevSize = preview.getAttachedSurfaceResolution();
         mPreviewView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -204,7 +206,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
                     public void run() {
                         err.printStackTrace();
                         result.error("-1","error while capturing image",err.getMessage());
-                }
+                    }
                 });
 
             }
@@ -264,20 +266,20 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
                 result.success(true);
                 break;
             case Constants.initializeCamera:
-                    setLensFacing((String)call.argument("lensFacing"));
-                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        plugin.activityPluginBinding.getActivity().requestPermissions(
+                setLensFacing((String)call.argument("lensFacing"));
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    plugin.activityPluginBinding.getActivity().requestPermissions(
                             new String[]{Manifest.permission.CAMERA},
                             513469796);
-                        plugin.activityPluginBinding.addRequestPermissionsResultListener(new PluginRegistry.RequestPermissionsResultListener() {
-                            @Override
-                            public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-                                if(requestCode==CAMERA_REQUEST_ID && grantResults[0]==PackageManager.PERMISSION_GRANTED)
-                                    startCamera(context, flutterPluginBinding, plugin);  //start camera if permission has been granted by user
-                                return false;
-                            }
-                        });
-                    }
+                    plugin.activityPluginBinding.addRequestPermissionsResultListener(new PluginRegistry.RequestPermissionsResultListener() {
+                        @Override
+                        public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+                            if(requestCode==CAMERA_REQUEST_ID && grantResults[0]==PackageManager.PERMISSION_GRANTED)
+                                startCamera(context, flutterPluginBinding, plugin);  //start camera if permission has been granted by user
+                            return false;
+                        }
+                    });
+                }
                 break;
             case Constants.set_preview_aspect_ratio_method_name:
                 try {

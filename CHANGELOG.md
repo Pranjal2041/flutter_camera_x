@@ -31,3 +31,8 @@
 ## 0.0.9
 
 * Play sound on click
+
+
+## 0.1.0
+
+* Fix bug when opening camera multiple times

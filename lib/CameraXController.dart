@@ -49,9 +49,8 @@ class CameraXController {
         {"num": num, "denom": denom});
   }
 
-  Future enableClickSound(bool val){
+  Future enableClickSound(bool val) {
     return _channel.invokeMethod(
-        CameraXConstants.play_sound_on_click_method_name,
-        {"data": val});
+        CameraXConstants.play_sound_on_click_method_name, {"data": val});
   }
 }
