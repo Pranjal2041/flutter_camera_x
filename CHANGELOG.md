@@ -36,3 +36,8 @@
 ## 0.1.0
 
 * Fix bug when opening camera multiple times
+
+
+## 0.1.1
+
+* Fix aspect Ratio and add option to get byte data

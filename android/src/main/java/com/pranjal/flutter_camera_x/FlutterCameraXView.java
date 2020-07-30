@@ -4,8 +4,14 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
 import android.hardware.camera2.CameraManager;
 import android.media.AudioManager;
+import android.media.Image;
 import android.media.MediaActionSound;
 import android.os.Build;
 import android.os.Environment;
@@ -32,6 +38,7 @@ import androidx.camera.core.FocusMeteringAction;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
+import androidx.camera.core.ImageProxy;
 import androidx.camera.core.MeteringPoint;
 import androidx.camera.core.Preview;
 import androidx.camera.core.impl.PreviewConfig;
@@ -43,10 +50,14 @@ import androidx.lifecycle.LifecycleOwner;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.nio.BufferUnderflowException;
+import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -77,6 +88,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
     ProcessCameraProvider cameraProvider;
     int CAMERA_REQUEST_ID = 513469796;
     boolean playSoundOnClick = true;
+    boolean saveToFile = true;
 
 
     FlutterCameraXView(Context context, BinaryMessenger messenger, int id, FlutterPlugin.FlutterPluginBinding flutterPluginBinding,FlutterCameraXPlugin plugin) {
@@ -128,7 +140,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
 //                .build();
         Preview.Builder previewBuilder = new Preview.Builder();
         @SuppressLint("RestrictedApi")
-        Preview preview = previewBuilder.setTargetAspectRatioCustom(aspectRatio).build();
+        Preview preview = previewBuilder.build();
 //        CameraSelector cameraSelector = new CameraSelector().Builder()
 
         final CameraSelector cameraSelector = new CameraSelector.Builder()
@@ -174,43 +186,100 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
 
     }
 
+    private Bitmap toBitmap(Image image) {
+        Image.Plane[] planes = image.getPlanes();
+        ByteBuffer yBuffer = planes[0].getBuffer();
+        ByteBuffer uBuffer = planes[1].getBuffer();
+        ByteBuffer vBuffer = planes[2].getBuffer();
+
+        int ySize = yBuffer.remaining();
+        int uSize = uBuffer.remaining();
+        int vSize = vBuffer.remaining();
+
+        byte[] nv21 = new byte[ySize + uSize + vSize];
+        //U and V are swapped
+        yBuffer.get(nv21, 0, ySize);
+        vBuffer.get(nv21, ySize, vSize);
+        uBuffer.get(nv21, ySize + vSize, uSize);
+
+        YuvImage yuvImage = new YuvImage(nv21, ImageFormat.NV21, image.getWidth(), image.getHeight(), null);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        yuvImage.compressToJpeg(new Rect(0, 0, yuvImage.getWidth(), yuvImage.getHeight()), 75, out);
+
+        byte[] imageBytes = out.toByteArray();
+        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+    }
+
     void captureImage(String path, final MethodChannel.Result result){
         SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
         File file = new File(path);//getDirectoryName(), mDateFormat.format(new Date())+ ".jpg");
         ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(file).build();
         imageCapture.setFlashMode(flashMode);
-        if(playSoundOnClick)
-            playClickSound();
+//        if(playSoundOnClick)
+//            playClickSound();
 
-        imageCapture.takePicture(outputFileOptions, executor, new ImageCapture.OnImageSavedCallback () {
-            @Override
-            public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-                plugin.activityPluginBinding.getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        result.success(true);
-                    }
-                });
-//                new Handler().post(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                              result.success(true);
-//                            }
-//                        });
-            }
-            @Override
-            public void onError(@NonNull ImageCaptureException error) {
-                final ImageCaptureException err = error;
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        err.printStackTrace();
-                        result.error("-1","error while capturing image",err.getMessage());
-                    }
-                });
 
-            }
-        });
+
+        if(!saveToFile) {
+            imageCapture.takePicture(executor, new ImageCapture.OnImageCapturedCallback() {
+                @Override
+                public void onCaptureSuccess(@NonNull final ImageProxy image) {
+                    playClickSound();
+                    plugin.activityPluginBinding.getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            @SuppressLint("UnsafeExperimentalUsageError")
+                            Bitmap bim = toBitmap(Objects.requireNonNull(image.getImage()));
+                            int size     = bim.getRowBytes() * bim.getHeight();
+
+                            ByteBuffer b = ByteBuffer.allocate(size);
+
+                            bim.copyPixelsToBuffer(b);
+
+                            byte[] bytes = new byte[size];
+                            try {
+                                b.get(bytes, 0, bytes.length);
+                            } catch (BufferUnderflowException e) {}
+
+                            result.success(bytes);
+
+                        }
+                    });
+                    super.onCaptureSuccess(image);
+                }
+
+                @Override
+                public void onError(@NonNull ImageCaptureException exception) {
+                    super.onError(exception);
+                }
+            });
+        }
+        else {
+            imageCapture.takePicture(outputFileOptions, executor, new ImageCapture.OnImageSavedCallback() {
+                @Override
+                public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
+                    plugin.activityPluginBinding.getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            result.success(true);
+                        }
+                    });
+                }
+
+                @Override
+                public void onError(@NonNull ImageCaptureException error) {
+                    final ImageCaptureException err = error;
+                    new Handler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            err.printStackTrace();
+                            result.error("-1", "error while capturing image", err.getMessage());
+                        }
+                    });
+
+                }
+            });
+        }
     }
 
 //    public String getDirectoryName() {
@@ -267,6 +336,9 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
                 break;
             case Constants.initializeCamera:
                 setLensFacing((String)call.argument("lensFacing"));
+                if(call.argument("saveToFile")!=null && !(Boolean)call.argument("saveToFile")){
+                    saveToFile = false;
+                }
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     plugin.activityPluginBinding.getActivity().requestPermissions(
                             new String[]{Manifest.permission.CAMERA},
