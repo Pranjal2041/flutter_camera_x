@@ -23,6 +23,10 @@ class _MyAppState extends State<MyApp> {
     var cameras = await CameraXDescriptor.getAvailableCameras();
     print(cameras);
     _cameraXController = CameraXController(cameras[0]);
+    void callback(){
+      print("Perform Action Here");
+    }
+    _cameraXController.listenForPictureClick(callback);
     if (mounted) {
       setState(() {});
     }

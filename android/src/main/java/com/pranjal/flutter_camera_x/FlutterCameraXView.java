@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -56,6 +57,7 @@ import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -138,10 +140,21 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
 //        PreviewConfig previewConfig = new PreviewConfig.Builder()
 //                .setTargetResolution(new Size(720, 720))
 //                .build();
+
+
+//        DisplayMetrics disMetrics = new DisplayMetrics();
+//        context.getWindowManager().getDefaultDisplay().getMetrics(disMetrics);
+        int a =  Resources.getSystem().getDisplayMetrics().widthPixels;
+
         Preview.Builder previewBuilder = new Preview.Builder();
         @SuppressLint("RestrictedApi")
-        Preview preview = previewBuilder.build();
+        Preview preview = previewBuilder
+                .setTargetResolution(new Size(a, (int) (a*16.0/9.0)))
+                // .setTargetAspectRatioCustom(new Rational(16,9))
+                .build();
 //        CameraSelector cameraSelector = new CameraSelector().Builder()
+
+
 
         final CameraSelector cameraSelector = new CameraSelector.Builder()
                 .requireLensFacing(lensFacing==CameraSelector.LENS_FACING_BACK?CameraSelector.LENS_FACING_BACK:CameraSelector.LENS_FACING_FRONT)
@@ -167,7 +180,8 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
         final CameraControl cameraControl = camera.getCameraControl();
 //        val captureSize = imageCaptureUseCase.attachedSurfaceResolution ?: Size(0, 0)
 //        val previewSize = previewUseCase.attachedSurfaceResolution ?: Size(0, 0)
-        Size prevSize = preview.getAttachedSurfaceResolution();
+//        Size prevSize = preview.getAttachedSurfaceResolution();
+
         mPreviewView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -256,11 +270,17 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
         }
         else {
             imageCapture.takePicture(outputFileOptions, executor, new ImageCapture.OnImageSavedCallback() {
+
                 @Override
                 public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
+                    if(playSoundOnClick)
+                        playClickSound();
                     plugin.activityPluginBinding.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            HashMap<String, Object> arguments2 = new HashMap<>();
+                            arguments2.put("pictureTaken", true);
+                            methodChannel.invokeMethod("pictureClicked",arguments2);
                             result.success(true);
                         }
                     });

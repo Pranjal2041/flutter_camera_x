@@ -7,16 +7,34 @@ class CameraXController {
 //      : _channel = new MethodChannel('${CameraXConstants.channel_id}_$id');
 
   var _cameraXDescriptor;
+  var _saveToFile;
 
-  CameraXController(cameraXDescriptor) {
+  CameraXController(cameraXDescriptor,{saveToFile = true}) {
     this._cameraXDescriptor = cameraXDescriptor;
     this._channel = new MethodChannel('${CameraXConstants.channel_id}_0');
+    this._saveToFile = saveToFile;
   }
 
 //  CameraXController._(int id)
 //      : _channel = new MethodChannel('flutter_pluginer_$id');
 
   MethodChannel _channel;
+
+  listenForPictureClick(var callback){
+    try {
+      Future<dynamic> handleMethodCall(MethodCall call) {
+        if (call.method == "pictureClicked") {
+          callback();
+        }
+      }
+      _channel.setMethodCallHandler(handleMethodCall);
+    }catch(e){
+      print(e);
+    }
+  }
+
+
+
 
   Future<void> setFlashMode(FlashModeX mode) async {
     if (mode == FlashModeX.On)
@@ -31,9 +49,14 @@ class CameraXController {
   }
 
   Future<void> initialize() async {
-    if (_cameraXDescriptor == null) return;
+    print("before Initializing camera here");
+
+    if (_cameraXDescriptor == null)
+      return;
+    print("Initializing camera here");
     _channel.invokeMethod("initializeCamera", {
-      "lensFacing": getStringFromCameraXFacing(_cameraXDescriptor.lensFacing)
+      "lensFacing": getStringFromCameraXFacing(_cameraXDescriptor.lensFacing),
+      "saveToFile": _saveToFile
     });
   }
 
