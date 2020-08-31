@@ -45,3 +45,7 @@
 ## 0.1.7
 
 * Add Torch Mode
+
+## 0.1.8
+
+* Default Shutter Sound to Off

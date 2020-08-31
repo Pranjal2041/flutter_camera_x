@@ -89,7 +89,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
     Rational aspectRatio = new Rational(16,9);
     ProcessCameraProvider cameraProvider;
     int CAMERA_REQUEST_ID = 513469796;
-    boolean playSoundOnClick = true;
+    boolean playSoundOnClick = false;
     boolean saveToFile = true;
     boolean torchMode = false;
 
@@ -362,7 +362,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
 
     @Override
     public void onMethodCall(MethodCall call, @NonNull MethodChannel.Result result) {
-        switch (call.method) {
+        switch ((String)(call.method)) {
             case Constants.capture_image_method_name:
                 captureImage((String) call.argument("data"), result);
 //                result.success(true);
