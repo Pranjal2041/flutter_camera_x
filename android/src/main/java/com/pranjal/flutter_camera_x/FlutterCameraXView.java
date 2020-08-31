@@ -91,6 +91,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
     int CAMERA_REQUEST_ID = 513469796;
     boolean playSoundOnClick = true;
     boolean saveToFile = true;
+    boolean torchMode = false;
 
 
     FlutterCameraXView(Context context, BinaryMessenger messenger, int id, FlutterPlugin.FlutterPluginBinding flutterPluginBinding,FlutterCameraXPlugin plugin) {
@@ -150,10 +151,10 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
         @SuppressLint("RestrictedApi")
         Preview preview = previewBuilder
                 .setTargetResolution(new Size(a, (int) (a*16.0/9.0)))
+
                 // .setTargetAspectRatioCustom(new Rational(16,9))
                 .build();
 //        CameraSelector cameraSelector = new CameraSelector().Builder()
-
 
 
         final CameraSelector cameraSelector = new CameraSelector.Builder()
@@ -174,8 +175,11 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
 
         preview.setSurfaceProvider(mPreviewView.createSurfaceProvider());
         imageCapture.setFlashMode(flashMode);
+
         cameraProvider.unbindAll();
         camera = cameraProvider.bindToLifecycle(((LifecycleOwner) plugin.activityPluginBinding.getActivity()), cameraSelector, preview, imageAnalysis, imageCapture);
+
+        camera.getCameraControl().enableTorch(torchMode);
 
         final CameraControl cameraControl = camera.getCameraControl();
 //        val captureSize = imageCaptureUseCase.attachedSurfaceResolution ?: Size(0, 0)
@@ -326,9 +330,26 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
     }
 
     private void setFlashMode(String mode){
+        if(mode.equals("Torch")){
+            setTorchMode(true);
+            mode = "On";
+        }else {
+            setTorchMode(false);
+        }
         flashMode = Utils.getFlashModeFromString(mode);
         if(imageCapture!=null)
             imageCapture.setFlashMode(flashMode);
+    }
+
+    private void setTorchMode(boolean mode){
+        torchMode = mode;
+        try {
+            if (camera != null) {
+                camera.getCameraControl().enableTorch(mode);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void setPlaySoundOnClick(boolean value){
@@ -350,6 +371,10 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
                 setFlashMode((String) call.argument("data"));
                 result.success(true);
                 break;
+//            case Constants.set_torch_method_name:
+//                setTorchMode((boolean) call.argument("data"));
+//                result.success(true);
+//                break;
             case Constants.set_lens_facing_method_name:
                 setLensFacing((String) call.argument("data"));
                 result.success(true);
@@ -357,7 +382,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
             case Constants.initializeCamera:
                 setLensFacing((String)call.argument("lensFacing"));
                 if(call.argument("saveToFile")!=null && !(Boolean)call.argument("saveToFile")){
-                    saveToFile = false;
+                    saveToFile = true;
                 }
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     plugin.activityPluginBinding.getActivity().requestPermissions(

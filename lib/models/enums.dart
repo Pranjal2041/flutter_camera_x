@@ -1,4 +1,4 @@
-enum FlashModeX { On, Off, Auto }
+enum FlashModeX { On, Off, Auto, Torch }
 
 enum CameraXFacing { Front, Back, External }
 

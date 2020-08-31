@@ -4,6 +4,7 @@ class CameraXConstants {
   static const previewViewType =
       "com.pranjal.flutter_camera_x/cameraX_preview_view";
   static const set_flash_method_name = "setFlashMode";
+  static const set_torch_method_name = "setTorchMode";
   static const capture_image_method_name = "captureImage";
   static const set_lens_facing_method_name = "setLensFacing";
   static const get_available_cameras_method_name = "getAvailableCameras";

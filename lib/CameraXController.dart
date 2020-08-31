@@ -46,7 +46,15 @@ class CameraXController {
     if (mode == FlashModeX.Auto)
       return _channel.invokeMethod(
           CameraXConstants.set_flash_method_name, {"data": "Auto"});
+    if (mode == FlashModeX.Torch)
+      return _channel.invokeMethod(
+          CameraXConstants.set_flash_method_name, {"data": "Torch"});
   }
+
+//  Future<void> enableTorch(bool mode) async {
+//      return _channel.invokeMethod(
+//          CameraXConstants.set_torch_method_name, {"data": mode});
+//  }
 
   Future<void> initialize() async {
     print("before Initializing camera here");

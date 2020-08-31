@@ -4,7 +4,7 @@ import 'package:flutter_camera_x/flutter_cameraX.dart';
 import 'package:flutter_camera_x/CameraXDescriptor.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-
+import 'package:flutter_camera_x/models/enums.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
@@ -13,6 +13,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  bool torchEnabled = false;
   @override
   void initState() {
     initializeCamera();
@@ -59,16 +61,33 @@ class _MyAppState extends State<MyApp> {
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: InkWell(
-                    onTap: () async {
-                      final path = join((await getTemporaryDirectory()).path,
-                          '${DateTime.now()}.png');
-                      await _cameraXController.takePicture(path);
-                    },
-                    child: Container(
-                      height: 50,
-                      child: Text("Take Picture"),
-                    ),
+                  child: Row(
+                    children: <Widget>[
+                      InkWell(
+                        onTap: () async {
+                          setState(() {
+                            torchEnabled = !torchEnabled;
+                          });
+
+                          await _cameraXController.setFlashMode(torchEnabled?FlashModeX.Torch:FlashModeX.Auto);
+                        },
+                        child: Container(
+                          height: 50,
+                          child: Text(torchEnabled?"Disable Torch":"Enable Torch"),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          final path = join((await getTemporaryDirectory()).path,
+                              '${DateTime.now()}.png');
+                          await _cameraXController.takePicture(path);
+                        },
+                        child: Container(
+                          height: 50,
+                          child: Text("Take Picture"),
+                        ),
+                      ),
+                    ],
                   ),
                 )
               ],

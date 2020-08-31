@@ -41,3 +41,7 @@
 ## 0.1.1
 
 * Fix aspect Ratio and add option to get byte data
+
+## 0.1.7
+
+* Add Torch Mode
