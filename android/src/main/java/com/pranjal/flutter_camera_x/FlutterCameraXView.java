@@ -79,7 +79,7 @@ public class FlutterCameraXView implements PlatformView, MethodChannel.MethodCal
     //    private int REQUEST_CODE_PERMISSIONS = 1001;
 //    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
     Camera camera;
-    int flashMode = ImageCapture.FLASH_MODE_AUTO;
+    int flashMode = ImageCapture.FLASH_MODE_OFF;
     ImageCapture imageCapture;
     int cameraId = 0;
     int lensFacing = CameraSelector.LENS_FACING_BACK;
