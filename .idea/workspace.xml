@@ -3,18 +3,32 @@
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="04b6bb13-e134-419e-aecd-1fc95f868fc7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/pranjal/flutter_camera_x/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/pranjal/flutter_camera_x/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/pranjal/flutter_camera_x/FlutterCameraXView.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/pranjal/flutter_camera_x/FlutterCameraXView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Flutter/Debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/Debug.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Flutter/Release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/Release.xcconfig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/CameraXController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/CameraXController.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/CameraXConstants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/CameraXConstants.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/enums.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/enums.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,13 +41,16 @@
   <component name="ProjectId" id="1ethCtN9HoYN6R6IU9fLaR5cw7r" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="flutter.settings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="SvnConfiguration">
@@ -47,45 +64,56 @@
       <option name="presentableId" value="Default" />
       <updated>1595146671779</updated>
     </task>
+    <task id="LOCAL-00001" summary="refactor(flutter-camera-x): set flash default to off">
+      <created>1616990702177</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1616990702177</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="refactor(flutter-camera-x): set flash default to off" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor(flutter-camera-x): set flash default to off" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="413" y="213" key="#xdebugger.evaluate" timestamp="1597920093623">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1878" height="305" key="GridCell.Tab.0.bottom" timestamp="1616990723655">
+      <screen x="1792" y="0" width="1920" height="1080" />
     </state>
-    <state x="413" y="213" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1597920093623" />
-    <state width="473" height="466" key="DebuggerActiveHint" timestamp="1596125504563">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1878" height="305" key="GridCell.Tab.0.bottom/1792.0.1920.1080/0.0.1792.1120@1792.0.1920.1080" timestamp="1616990723655" />
+    <state width="1878" height="305" key="GridCell.Tab.0.center" timestamp="1616990723654">
+      <screen x="1792" y="0" width="1920" height="1080" />
     </state>
-    <state width="473" height="466" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1596125504563" />
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1595237802041">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1878" height="305" key="GridCell.Tab.0.center/1792.0.1920.1080/0.0.1792.1120@1792.0.1920.1080" timestamp="1616990723654" />
+    <state width="1878" height="305" key="GridCell.Tab.0.left" timestamp="1616990723653">
+      <screen x="1792" y="0" width="1920" height="1080" />
     </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1595237802041" />
-    <state width="1491" height="199" key="GridCell.Tab.0.bottom" timestamp="1598048752014">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1878" height="305" key="GridCell.Tab.0.left/1792.0.1920.1080/0.0.1792.1120@1792.0.1920.1080" timestamp="1616990723653" />
+    <state width="1878" height="305" key="GridCell.Tab.0.right" timestamp="1616990723654">
+      <screen x="1792" y="0" width="1920" height="1080" />
     </state>
-    <state width="1491" height="199" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1598048752014" />
-    <state width="1491" height="199" key="GridCell.Tab.0.center" timestamp="1598048752014">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1878" height="305" key="GridCell.Tab.0.right/1792.0.1920.1080/0.0.1792.1120@1792.0.1920.1080" timestamp="1616990723654" />
+    <state x="2253" y="176" key="SettingsEditor" timestamp="1616990370875">
+      <screen x="1792" y="0" width="1920" height="1080" />
     </state>
-    <state width="1491" height="199" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1598048752014" />
-    <state width="1491" height="199" key="GridCell.Tab.0.left" timestamp="1598048752013">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="2253" y="176" key="SettingsEditor/1792.0.1920.1080/0.0.1792.1120@1792.0.1920.1080" timestamp="1616990370875" />
+    <state x="2352" y="264" key="Vcs.Push.Dialog.v2" timestamp="1616990706116">
+      <screen x="1792" y="0" width="1920" height="1080" />
     </state>
-    <state width="1491" height="199" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1598048752013" />
-    <state width="1491" height="199" key="GridCell.Tab.0.right" timestamp="1598048752014">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1491" height="199" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1598048752014" />
-    <state width="776" height="420" key="XDebugger.FullValuePopup" timestamp="1596125287159">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="776" height="420" key="XDebugger.FullValuePopup/0.0.1536.824@0.0.1536.824" timestamp="1596125287159" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1598103741878">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1598103741878" />
+    <state x="2352" y="264" key="Vcs.Push.Dialog.v2/1792.0.1920.1080/0.0.1792.1120@1792.0.1920.1080" timestamp="1616990706116" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
